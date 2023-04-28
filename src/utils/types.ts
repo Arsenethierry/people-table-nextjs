@@ -4,7 +4,7 @@ export interface TableBodyProps {
     columns: Array<string>
 }
 
-export type Address = {
+export interface Address {
     street: string;
     streetName: string;
     buildingNumber: string;
