@@ -27,19 +27,12 @@ export type Person = {
     address: Address;
 }
 
-export type sorts = {
-    columns: string;
-    order: string;
-}
-
 export interface headerProps {
     columns: Array<string>
-    sorting: sorts
     pageLimit: number
     setPageLimit: (page: number) => void
 }
 
 export type HeaderCellProps = {
     column: string;
-    sorting: sorts;
 }

@@ -4,7 +4,7 @@ import { BsArrowDownSquareFill, BsArrowUpSquareFill } from 'react-icons/bs';
 import { HeaderCellProps, headerProps } from '@/utils/types';
 
 
-const HeaderCell = ({ column, sorting }: HeaderCellProps) => {
+const HeaderCell = ({ column }: HeaderCellProps) => {
         return (
         <th key={column} className={styles.tablecell}>
             {column}
@@ -38,7 +38,6 @@ function TableHeader({ columns, pageLimit, setPageLimit }: headerProps) {
                     {columns.map((column: string) => (
                         <HeaderCell
                             column={column}
-                            sorting={sorting}
                             key={column}
                         />
                     ))}
