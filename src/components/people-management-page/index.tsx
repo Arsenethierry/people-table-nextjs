@@ -12,12 +12,7 @@ function PeopleManagementTable() {
         [pageLimit]
     );
 
-    const { isLoading, isSuccess, data, refetch } = useGetPeople(queryConfig);
-
-    const [sorting, setSorting] = useState({
-        columns: "id",
-        order: "asc"
-    })
+    const { isLoading, isSuccess, data, refetch, isRefetching } = useGetPeople(queryConfig);
 
     useEffect(() => {
         refetch();
@@ -25,6 +20,7 @@ function PeopleManagementTable() {
 
     const headerColumns = ['id', 'Avatar', 'first Name', 'last Name', 'gender', 'Age', 'Contact',]
     const columns = ['id', 'image', 'firstname', 'lastname', 'gender', 'birthday', 'phone',]
+
     return (
         <div className={styles.root}>
             <table className={styles.table}>
@@ -33,7 +29,6 @@ function PeopleManagementTable() {
                     <>
                         <TableHeader
                             columns={headerColumns}
-                            sorting={sorting}
                             pageLimit={pageLimit}
                             setPageLimit={setPageLimit}
                         />

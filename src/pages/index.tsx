@@ -30,7 +30,7 @@ export async function getStaticProps() {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery(['people'], async () => {
-    const res = await fetch('https://fakerapi.it/api/v1/persons')
+    const res = await fetch('https://fakerapi.it/api/v1/persons?_seed=12456')
     const data = await res.json()
     console.log(data)
     return data
