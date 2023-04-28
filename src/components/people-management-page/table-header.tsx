@@ -1,23 +1,49 @@
 import React from 'react';
 import styles from './styles.module.css';
+import { BsArrowDownSquareFill, BsArrowUpSquareFill } from 'react-icons/bs';
 
-type headerProps  = {
- columns: Array<string>
+type sorts = {
+    columns: string;
+    order: string;
 }
 
-function TableHeader({ columns }: headerProps) {
+interface headerProps {
+    columns: Array<string>
+    sorting: sorts
+}
+
+type HeaderCellProps = {
+    column: string;
+    sorting: sorts;
+}
+
+const HeaderCell = ({ column, sorting }: HeaderCellProps) => {
+    return (
+        <th key={column} className={styles.tablecell}>
+            {column}
+            <span><BsArrowDownSquareFill /></span>
+            {/* <span><BsArrowUpSquareFill /></span> */}
+        </th>
+    )
+}
+
+function TableHeader({ columns, sorting }: headerProps) {
     return (
         <React.Fragment>
             <thead>
                 <tr>
-                    <th className={styles.tablecell} colSpan={columns.length -1}></th>
+                    <th className={styles.tablecell} colSpan={columns.length - 1}></th>
                     <th className={styles.tablecell}>icon</th>
                 </tr>
             </thead>
             <thead>
                 <tr>
                     {columns.map((column: string) => (
-                        <th className={styles.tablecell} key={column}>{column}</th>
+                        <HeaderCell
+                            column={column}
+                            sorting={sorting}
+                            key={column}
+                        />
                     ))}
                 </tr>
             </thead>

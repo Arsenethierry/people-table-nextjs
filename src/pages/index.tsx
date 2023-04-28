@@ -1,8 +1,11 @@
 import Head from 'next/head'
-import Image from 'next/image'
+// import { QueryCache } from 'react-query'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import PeopleManagementTable from '@/components/people-management-page'
+// import { dehydrate } from 'react-query/hydration';
+// import { QueryCache, ReactQueryCacheProvider, hydrate } from 'react-query/hydration'
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,19 +20,27 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <PeopleManagementTable data={data?.data} />
+        <PeopleManagementTable />
       </main>
     </>
   )
 }
 
-export async function getServerSideProps() {
-  const res = await fetch('https://fakerapi.it/api/v1/persons')
-  const data = await res.json()
+export async function getStaticProps() {
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery(['people'], async () => {
+    const res = await fetch('https://fakerapi.it/api/v1/persons')
+    const data = await res.json()
+    console.log(data)
+    return data
+  })
 
   return {
     props: {
-      data,
+      dehydratedState: dehydrate(queryClient),
     },
   }
 }
+
+
