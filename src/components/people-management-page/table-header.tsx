@@ -10,6 +10,8 @@ type sorts = {
 interface headerProps {
     columns: Array<string>
     sorting: sorts
+    pageLimit: number
+    setPageLimit: (page: number) => void
 }
 
 type HeaderCellProps = {
@@ -18,7 +20,7 @@ type HeaderCellProps = {
 }
 
 const HeaderCell = ({ column, sorting }: HeaderCellProps) => {
-    return (
+        return (
         <th key={column} className={styles.tablecell}>
             {column}
             <span><BsArrowDownSquareFill /></span>
@@ -27,13 +29,23 @@ const HeaderCell = ({ column, sorting }: HeaderCellProps) => {
     )
 }
 
-function TableHeader({ columns, sorting }: headerProps) {
+function TableHeader({ columns, sorting, pageLimit, setPageLimit }: headerProps) {
+    const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setPageLimit(parseInt(e.target.value));
+    }
     return (
         <React.Fragment>
             <thead>
                 <tr>
                     <th className={styles.tablecell} colSpan={columns.length - 1}></th>
-                    <th className={styles.tablecell}>icon</th>
+                    <th className={styles.tablecell}>
+                        <select value={pageLimit} onChange={handleOptionChange}>
+                            <option value="">{pageLimit}</option>
+                            <option value={15}>15</option>
+                            <option value={30}>30</option>
+                            <option value={50}>50</option>
+                        </select>
+                    </th>
                 </tr>
             </thead>
             <thead>
