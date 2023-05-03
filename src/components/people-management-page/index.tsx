@@ -27,13 +27,20 @@ function PeopleManagementTable() {
     const headerColumns = ['id', 'Avatar', 'first Name', 'last Name', 'gender', 'Age', 'Contact',]
     const columns = ['id', 'image', 'firstname', 'lastname', 'gender', 'birthday', 'phone',]
 
+    const except = (col: string) => {
+        if (col === 'Avatar' || col === 'Contact') {
+            return true;
+        }
+        return false;
+    }
+
     const sortTable = (sorting: { field: string, order: 'asc' | 'desc' }) => {
         setSorting(sorting);
         console.log(sorting);
         const sortedData = [...solteddata].sort((a, b) => {
           if (sorting.field === 'id' || sorting.field === 'Age') {
             return sorting.order === 'asc' ? a.id - b.id : b.id - a.id;
-          } else {
+          } else if (!except(sorting.field)) {
             const valueA = a[sorting.field.replace(/\s+/g, '').toLowerCase()].toUpperCase();
             const valueB = b[sorting.field.replace(/\s+/g, '').toLowerCase()].toUpperCase();
             if (valueA < valueB) {
