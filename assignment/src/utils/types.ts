@@ -31,12 +31,8 @@ export interface headerProps {
     columns: Array<string>
     pageLimit: number
     setPageLimit: (page: number) => void
-    sortType: string
-    sortTypeHandler: () => void;
 }
 
 export type HeaderCellProps = {
     column: string;
-    sortType: string;
-    sortTypeHandler: () => void;
 }

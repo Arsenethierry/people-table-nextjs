@@ -4,21 +4,17 @@ import { BsArrowDownSquareFill, BsArrowUpSquareFill } from 'react-icons/bs';
 import { HeaderCellProps, headerProps } from '@/utils/types';
 
 
-const HeaderCell = ({ column, sortTypeHandler, sortType }: HeaderCellProps) => {
-
-
-    return (
+const HeaderCell = ({ column }: HeaderCellProps) => {
+        return (
         <th key={column} className={styles.tablecell}>
             {column}
-            <span>
-                {sortType == 'asc' ?
-                    <BsArrowDownSquareFill onClick={sortTypeHandler} /> : <BsArrowUpSquareFill onClick={sortTypeHandler} />}
-            </span>
+            {/* <span><BsArrowDownSquareFill /></span> */}
+            {/* <span><BsArrowUpSquareFill /></span> */}
         </th>
     )
 }
 
-function TableHeader({ columns, pageLimit, setPageLimit, sortType, sortTypeHandler }: headerProps) {
+function TableHeader({ columns, pageLimit, setPageLimit }: headerProps) {
     const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setPageLimit(parseInt(e.target.value));
     }
@@ -41,10 +37,8 @@ function TableHeader({ columns, pageLimit, setPageLimit, sortType, sortTypeHandl
                 <tr>
                     {columns.map((column: string) => (
                         <HeaderCell
-                            sortType={sortType}
                             column={column}
                             key={column}
-                            sortTypeHandler={sortTypeHandler}
                         />
                     ))}
                 </tr>

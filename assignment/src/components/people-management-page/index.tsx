@@ -6,8 +6,6 @@ import { useGetPeople } from './queries/get-people-data';
 
 function PeopleManagementTable() {
     const [pageLimit, setPageLimit] = useState<number>(10);
-    const [sortedPeople, setSortedPeople] = useState([])
-    const [sortType, setSortType] = useState<'asc' | 'desc'>('asc')
 
     const queryConfig = useMemo(
         () => ({ pageSize: pageLimit }),
@@ -23,15 +21,6 @@ function PeopleManagementTable() {
     const headerColumns = ['id', 'Avatar', 'first Name', 'last Name', 'gender', 'Age', 'Contact',]
     const columns = ['id', 'image', 'firstname', 'lastname', 'gender', 'birthday', 'phone',]
 
-    const sortTypeHandler = () => {
-        if (sortType == "asc") {
-            setSortType("desc")
-        } else {
-            setSortType("asc")
-        }
-        // setSortType(sortType => sortType == "asc" ? setSortType = "desc" : setSortType = "asc");
-    }
-
     return (
         <div className={styles.root}>
             <table className={styles.table}>
@@ -42,8 +31,6 @@ function PeopleManagementTable() {
                             columns={headerColumns}
                             pageLimit={pageLimit}
                             setPageLimit={setPageLimit}
-                            sortType={sortType}
-                            sortTypeHandler={sortTypeHandler}
                         />
                         <TableBody data={data?.data} columns={columns} />
                     </>
