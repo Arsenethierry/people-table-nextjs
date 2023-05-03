@@ -4,21 +4,30 @@ import { BsArrowDownSquareFill, BsArrowUpSquareFill } from 'react-icons/bs';
 import { HeaderCellProps, headerProps } from '@/utils/types';
 
 
-const HeaderCell = ({ column, sortTypeHandler, sortType }: HeaderCellProps) => {
-
+const HeaderCell = ({ column, sorting, sortTable }: HeaderCellProps) => {
+    const isDesc = sorting.order === 'desc';
+    const except = (col: string) => {
+        if (col === 'Avatar' || col === 'Contact') {
+            return true;
+        }
+        return false;
+    }
 
     return (
-        <th key={column} className={styles.tablecell}>
+        <th key={column} className={styles.tablecell} onClick={() => sortTable({
+            field: column,
+            order: isDesc ? 'asc' : 'desc',
+        })}>
             {column}
-            <span>
-                {sortType == 'asc' ?
-                    <BsArrowDownSquareFill onClick={sortTypeHandler} /> : <BsArrowUpSquareFill onClick={sortTypeHandler} />}
-            </span>
+            {sorting.field == column && !except(column) ? (
+
+                isDesc ? <span><BsArrowDownSquareFill /></span> : <span><BsArrowUpSquareFill /></span>
+            ) : !except(column) && <span><BsArrowDownSquareFill /></span>}
         </th>
     )
 }
 
-function TableHeader({ columns, pageLimit, setPageLimit, sortType, sortTypeHandler }: headerProps) {
+function TableHeader({ columns, pageLimit, setPageLimit, sorting, sortTable }: headerProps) {
     const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setPageLimit(parseInt(e.target.value));
     }
@@ -41,10 +50,10 @@ function TableHeader({ columns, pageLimit, setPageLimit, sortType, sortTypeHandl
                 <tr>
                     {columns.map((column: string) => (
                         <HeaderCell
-                            sortType={sortType}
+                            sorting={sorting}
                             column={column}
                             key={column}
-                            sortTypeHandler={sortTypeHandler}
+                            sortTable={sortTable}
                         />
                     ))}
                 </tr>
